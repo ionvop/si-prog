@@ -13,6 +13,20 @@ function adjustScale() {
     document.querySelector("body > *").style.transform = `scale(${scale}) translateY(1rem)`;
 }
 
+function breakpoint(input) {
+    document.head.innerHTML = "";
+    let display = document.createElement("pre");
+
+    try {
+        let data = JSON.parse(input)
+        display.innerText = JSON.stringify(data, null, 4);
+    } catch (error) {
+        display.innerText = input;
+    }
+
+    document.body.appendChild(display);
+}
+
 initialize();
 
 window.addEventListener("resize", () => {

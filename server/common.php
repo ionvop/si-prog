@@ -64,4 +64,38 @@ function PasswordStretch($userId, $password) {
     return $result;
 }
 
+function NewSession($userId) {
+    $data = GetSiteData();
+    $userIndex = FindIndex($data["users"], "id", $userId);
+    
+    if ($userIndex == -1) {
+        return false;
+    }
+
+    $user = $data["users"][$userIndex];
+
+    foreach($data["sessions"] as $key => $element) {
+        if ($element["userid"] == $user["id"]) {
+            unset($data["sessions"][$key]);
+        }
+    }
+
+    $data["sessions"] = array_values($data["sessions"]);
+
+    $newSession = [
+        "id" => uniqid("session"),
+        "userid" => $user["id"],
+        "expiry" => time() + 86400,
+        "time" => time()
+    ];
+    
+    $data["sessions"][] = $newSession;
+    
+    if (SetSiteData($data) == false) {
+        Alert("There was an oopsy woopsy, a little fucky wucky processing the data. Pls check if you typed any invalid characters.");
+    }
+
+    return $newSession["id"];
+}
+
 ?>

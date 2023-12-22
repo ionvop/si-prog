@@ -19,15 +19,15 @@
                 font-size: 3rem;
             }
 
-            form[action="server.php"] {
+            form[action="client.html"] {
                 margin-top: 10rem;
             }
 
-            form[action="server.php"] .-input--form {
+            form[action="client.html"] .-input--form {
                 margin-top: 3rem;
             }
 
-            form[action="server.php"] .-button--form {
+            form[action="client.html"] .-button--form {
                 margin-top: 10rem;
             }
 
@@ -47,10 +47,10 @@
                     <div class="login__welcome -theme__title">
                         Welcome Back!
                     </div>
-                    <form action="server.php" method="post" enctype="multipart/form-data">
-                        <input type="email" placeholder="Enter your email" class="-input--form">
-                        <input type="password" placeholder="Enter your password" class="-input--form">
-                        <button type="submit" class="-button--form">
+                    <form action="client.html" method="get" enctype="multipart/form-data">
+                        <input name="email" type="email" placeholder="Enter your email" class="-input--form">
+                        <input name="password" type="password" placeholder="Enter your password" class="-input--form">
+                        <button type="submit" name="method" value="login" class="-button--form">
                             Log-in
                         </button>
                     </form>

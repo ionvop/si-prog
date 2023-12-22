@@ -31,11 +31,29 @@
                         },
                         body: JSON.stringify(data)
                     }).then(res => res.json()).then(
-                        data => {
-                            document.head.innerHTML = "";
-                            let display = document.createElement("pre");
-                            display.innerText = JSON.stringify(data, null, 4);
-                            document.body.appendChild(display);
+                        res => {
+                            switch (data.method) {
+                                case "register":
+                                    if (res.status != 0) {
+                                        alert("Error: " + res.response);
+                                        window.history.back();
+                                        return;
+                                    }
+
+                                    alert("Successfully registered!");
+                                    location.href = "login/";
+                                    break;
+                                case "login":
+                                if (res.status != 0) {
+                                        alert("Error: " + res.response);
+                                        window.history.back();
+                                        return;
+                                    }
+
+                                    alert("Successfully logged in!");
+                                    location.href = "login/";
+                                    break;
+                            }
                         }
                     ).catch(
                         error => {
