@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <base href="./">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+
+        </style>
+    </head>
+    <body>
+        
+    </body>
+    <script src="script.js"></script>
+    <script>
+        fetch("config.json", {
+            method: "GET"
+        }).then(res => res.json()).then(
+            config => {
+                let data = {};
+
+                new URLSearchParams(location.search).forEach((value, key) => {
+                    data[key] = value;
+                });
+
+                if (data.method != undefined) {
+                    fetch(config.server, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    }).then(res => res.json()).then(
+                        data => {
+                            document.head.innerHTML = "";
+                            let display = document.createElement("pre");
+                            display.innerText = JSON.stringify(data, null, 4);
+                            document.body.appendChild(display);
+                        }
+                    ).catch(
+                        error => {
+                            document.head.innerHTML = "";
+                            document.body.innerText += error;
+                        }
+                    )
+                }
+            }
+        )
+    </script>
+</html>

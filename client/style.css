@@ -1,0 +1,75 @@
+.test {
+    outline: 0.1rem solid #0f0;
+}
+
+html {
+    font-size: 2vw;
+    overflow: auto;
+}
+
+body {
+    background-color: #3e3c3f;
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin: 0rem;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    border: none;
+}
+
+form {
+    margin: 0rem;
+    margin-block-end: 0rem;
+}
+
+.-theme__title {
+    color: #7d3236;
+    font-weight: bolder;
+    text-shadow: #000000 0rem 0.3rem 1rem;
+    font-size: 2rem;
+}
+
+.-theme__subtitle {
+    color: #d7c4c6;
+}
+
+.-theme__subtitle2 {
+    color: #bf969e;
+}
+
+.-theme__subtitle2__link {
+    color: #d4a0a2;
+    font-weight: bolder;
+}
+
+.-button--form {
+    background-color: #4c2424;
+    color: #260301;
+    padding: 2rem;
+    width: 100%;
+    font-size: 2rem;
+    border: none;
+    border-radius: 1rem;
+    font-weight: bolder;
+}
+
+.-input--form {
+    display: block;
+    padding: 1.5rem;
+    font-size: 1.5rem;
+    background-color: #fff;
+    color: #111;
+    border-radius: 3rem;
+    border: none;
+    width: 100%;
+    font-weight: bold;
+}
+
+.-content {
+    padding: 5rem;
+}
