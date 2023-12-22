@@ -1,0 +1,250 @@
+<html>
+    <head>
+        <base href="../">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            .home {
+                height: 100%;
+            }
+
+            .home__grid {
+                display: grid;
+                grid-template-rows: max-content 1fr;
+                height: 100%;
+            }
+            
+            .home__top__grid {
+                display: grid;
+                grid-template-columns: max-content 1fr max-content;
+            }
+
+            .home__top__grid > div {
+                padding: 1rem;
+            }
+
+            .home__content__grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                height: 100%;
+            }
+
+            .home__content__left {
+                height: 100%;
+            }
+
+            .home__content__left__grid {
+                display: grid;
+                grid-template-rows: max-content max-content 1fr max-content;
+                height: 100%;
+            }
+
+            .home__content__left__logo {
+                text-align: center;
+            }
+
+            .logo {
+                width: 70%;
+            }
+
+            .home__content__left__text {
+                padding: 3rem;
+            }
+
+            .welcome {
+                color: #e96360;
+                font-size: 3rem;
+                font-weight: bolder;
+            }
+
+            .slogan {
+                margin-top: 1rem;
+                font-size: 2rem;
+            }
+
+            .home__content__left__ai {
+                padding: 3rem;
+                padding-left: 0rem;
+            }
+
+            .ai {
+                width: max-content;
+                padding: 0.3rem;
+                padding-right: 1rem;
+                padding-left: 2rem;
+                border-radius: 1rem;
+                background-color: #9a9494;
+                color: #000000;
+                font-size: 2rem;
+                font-weight: bold;
+                transform: translateX(-1rem);
+            }
+
+            .ai__grid {
+                display: grid;
+                grid-template-columns: max-content 1fr;
+            }
+
+            .ai__icon > span {
+                font-size: 4rem;
+            }
+
+            .ai__text {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: 1rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main__menu">
+            <div class="-menu">
+                <div class="-menu__grid">
+                    <div class="-menu__content">
+                        <div class="home">
+                            <div class="home__grid">
+                                <div class="home__top">
+                                    <div class="home__top__grid">
+                                        <div class="home__top__menu">
+                                            <button class="-button--icon">
+                                                <span class="material-symbols-rounded">
+                                                    menu
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div></div>
+                                        <div class="home__top__settings">
+                                            <button class="-button--icon">
+                                                <span class="material-symbols-rounded">
+                                                    construction
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="home__content">
+                                    <div class="home__content__grid">
+                                        <div class="home__content__left">
+                                            <div class="home__content__left__grid">
+                                                <div class="home__content__left__logo">
+                                                    <img src="assets/image2.png" class="logo">
+                                                </div>
+                                                <div class="home__content__left__text">
+                                                    <div class="welcome">
+                                                        Hello!<br>
+                                                        Charlie John
+                                                    </div>
+                                                    <div class="slogan">
+                                                        Let's make fun<br>
+                                                        coding experience
+                                                    </div>
+                                                </div>
+                                                <div></div>
+                                                <div class="home__content__left__ai">
+                                                    <div class="ai">
+                                                        <div class="ai__grid">
+                                                            <div class="ai__icon">
+                                                                <span class="material-symbols-rounded">
+                                                                    neurology
+                                                                </span>
+                                                            </div>
+                                                            <div class="ai__text">
+                                                                Ask AI
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="home__content__right">
+                                            <div class="home__content__right__grid">
+                                                <div class="home__content__right__search">
+                                                    <form action="client.html">
+                                                        <input name="search" class="-input--form">
+                                                    </form>
+                                                </div>
+                                                <div class="home__content__right__languages">
+                                                    <div class="languages">
+                                                        <div class="languages__grid">
+                                                            <div class="languages__python">
+
+                                                            </div>
+                                                            <div class="languages__javascript">
+                                                                
+                                                            </div>
+                                                            <div class="languages__html">
+                                                                
+                                                            </div>
+                                                            <div class="languages__java">
+                                                                
+                                                            </div>
+                                                            <div class="languages__sql">
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="-menu__tabs">
+                        <div class="-menu__tabs__grid">
+                            <div class="-menu__tabs__home">
+                                <a href="menu/">
+                                    <button class="-button--icon -menu__tabs__selected">
+                                        <span class="material-symbols-rounded">
+                                            home
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__files">
+                                <a href="menu/files/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            folder
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__new">
+                                <a href="menu/new/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            add_circle
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__notifications">
+                                <a href="menu/notifications/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            notifications
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__profile">
+                                <a href="menu/profile/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            account_circle
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="script.js"></script>
+</html>
