@@ -1,0 +1,269 @@
+<html>
+    <head>
+        <base href="../">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            .ai {
+                height: 100%;
+            }
+
+            .ai__grid {
+                display: grid;
+                grid-template-rows: 1fr auto;
+                height: 100%;
+            }
+
+            .ai__grid > div {
+                padding: 1rem;
+            }
+
+            .ai__chat__render {
+                padding: 3rem;
+                width: 40rem;
+                overflow-y: auto;
+                max-height: 60rem;
+            }
+
+            .ai__chat__render .item--ai {
+                background-color: #6c6b6c;
+                border-radius: 1rem;
+                padding: 1rem;
+                font-size: 2rem;
+                margin-top: 1rem;
+            }
+
+            .ai__chat__render .item--ai__grid {
+                display: grid;
+                grid-template-columns: max-content 1fr;
+            }
+
+            .ai__chat__render .item--ai__grid > div {
+                padding: 1rem;
+            }
+
+            .ai__chat__render .item--ai__icon > span {
+                font-size: 5rem;
+                color: #bf5f5f;
+            }
+
+            .ai__chat__render .item--user {
+                background-color: #4c4b4c;
+                border-radius: 1rem;
+                padding: 1rem;
+                font-size: 2rem;
+                margin-top: 1rem;
+            }
+
+            .ai__chat__render .item--user__grid {
+                display: grid;
+                grid-template-columns: 1fr auto;
+            }
+
+            .ai__chat__render .item--user__grid > div {
+                padding: 1rem;
+            }
+
+            .ai__chat__render .item--user__text {
+                word-wrap: break-word;
+            }
+
+            .ai__reply__grid {
+                display: grid;
+                grid-template-columns: 1fr max-content;
+            }
+
+            .ai__reply__grid > div {
+                padding: 1rem;
+            }
+
+            .ai__reply__input__text {
+                background-color: #6c6b6c;
+                border-radius: 1rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main__ai">
+            <div class="-menu">
+                <div class="-menu__grid">
+                    <div class="-menu__content">
+                        <div class="ai test">
+                            <div class="ai__grid">
+                                <div class="ai__chat">
+                                    <div class="ai__chat__render">
+                                        <div class="item--ai">
+                                            <div class="item--ai__grid">
+                                                <div class="item--ai__icon">
+                                                    <span class="material-symbols-rounded">
+                                                        neurology
+                                                    </span>
+                                                </div>
+                                                <div class="item--ai__text">
+                                                    Hi!!! I am Betty.<br>
+                                                    How can I assist you today?
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ai__reply">
+                                    <div class="ai__reply__grid">
+                                        <div class="ai__reply__input">
+                                            <input class="ai__reply__input__text -input--form">
+                                        </div>
+                                        <div class="ai__reply__send">
+                                            <button class="ai__reply__send__button -button--icon" onclick="send()">
+                                                <span class="material-symbols-rounded">
+                                                    send
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="-menu__tabs">
+                        <div class="-menu__tabs__grid">
+                            <div class="-menu__tabs__home">
+                                <a href="menu/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            home
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__files">
+                                <a href="menu/files/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            folder
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__new">
+                                <a href="menu/new/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            add_circle
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__notifications">
+                                <a href="menu/notifications/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            notifications
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__profile">
+                                <a href="menu/profile/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            account_circle
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="script.js"></script>
+    <script>
+        let history;
+
+        fetch("assets/prompt.txt").then(res => res.text()).then(
+            prompt => {
+                history = [
+                    {
+                        role: "system",
+                        content: "You are a coding assistant."
+                    },
+                    {
+                        role: "user",
+                        content: prompt
+                    },
+                    {
+                        role: "assistant",
+                        content: "Hi!!! I am Betty.\nHow can I assist you today?"
+                    }
+                ]
+            }
+        )
+
+        function escapeHtml(text) {
+            let div = document.createElement("div");
+            div.appendChild(document.createTextNode(text.replace("/\n/g", "<br>")));
+            return div.innerHTML;
+        }
+
+        function send() {
+            document.querySelector(".ai__reply__send__button").style.display = "none";
+            
+
+            document.querySelector(".ai__chat__render").innerHTML += `
+                <div class="item--user">
+                    <div class="item--user__grid">
+                        <div></div>
+                        <div class="item--user__text">
+                            ${escapeHtml(document.querySelector(".ai__reply__input__text").value)}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            history.push({
+                role: "user",
+                content: document.querySelector(".ai__reply__input__text").value
+            })
+
+            document.querySelector(".ai__reply__input__text").value = "";
+
+            fetch("apikey.txt").then(res => res.text()).then(
+                apiKey => {
+                    fetch("https://api.openai.com/v1/chat/completions", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: "Bearer " + apiKey
+                        },
+                        body: JSON.stringify({
+                            model: "gpt-3.5-turbo",
+                            messages: history
+                        })
+                    }).then(res => res.json()).then(
+                        res => {
+                            history.push(res.choices[0].message);
+                            document.querySelector(".ai__reply__send__button").style.display = "";
+
+                            document.querySelector(".ai__chat__render").innerHTML += `
+                                <div class="item--ai">
+                                    <div class="item--ai__grid">
+                                        <div class="item--ai__icon">
+                                            <span class="material-symbols-rounded">
+                                                neurology
+                                            </span>
+                                        </div>
+                                        <div class="item--ai__text">
+                                            ${escapeHtml(res.choices[0].message.content)}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    )
+                }
+            )
+        }
+    </script>
+</html>

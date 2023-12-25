@@ -96,6 +96,56 @@
                 justify-content: center;
                 margin-left: 1rem;
             }
+
+            .search {
+                padding: 1rem;
+            }
+
+            .search__input {
+                background-color: #9a9494;
+            }
+
+            .languages {
+                height: 90%;
+            }
+
+            .languages__grid {
+                display: grid;
+                grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+                height: 100%;
+            }
+
+            .languages__grid > div {
+                padding: 1rem;
+                padding-right: 0rem;
+                transform: translateX(1rem);
+            }
+
+            .language {
+                background-color: #5a2a2a;
+                border-radius: 1rem;
+                padding: 1rem;
+                padding-right: 2rem;
+            }
+
+            .language__grid {
+                display: grid;
+                grid-template-columns: 1fr max-content;
+            }
+
+            .language__text {
+                font-size: 2rem;
+                height: 100%;
+            }
+
+            .language__icon {
+                padding: 1rem;
+            }
+
+            .language__icon__image {
+                max-width: 5rem;
+                max-height: 5rem;
+            }
         </style>
     </head>
     <body>
@@ -143,45 +193,92 @@
                                                 </div>
                                                 <div></div>
                                                 <div class="home__content__left__ai">
-                                                    <div class="ai">
-                                                        <div class="ai__grid">
-                                                            <div class="ai__icon">
-                                                                <span class="material-symbols-rounded">
-                                                                    neurology
-                                                                </span>
-                                                            </div>
-                                                            <div class="ai__text">
-                                                                Ask AI
+                                                    <a href="ai/">
+                                                        <div class="ai">
+                                                            <div class="ai__grid">
+                                                                <div class="ai__icon">
+                                                                    <span class="material-symbols-rounded">
+                                                                        neurology
+                                                                    </span>
+                                                                </div>
+                                                                <div class="ai__text">
+                                                                    Ask AI
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="home__content__right">
                                             <div class="home__content__right__grid">
-                                                <div class="home__content__right__search">
+                                                <div class="search">
                                                     <form action="client.html">
-                                                        <input name="search" class="-input--form">
+                                                        <input name="search" placeholder="Search" class="-input--form search__input">
                                                     </form>
                                                 </div>
                                                 <div class="home__content__right__languages">
                                                     <div class="languages">
                                                         <div class="languages__grid">
                                                             <div class="languages__python">
-
+                                                                <div class="language">
+                                                                    <div class="language__grid">
+                                                                        <div class="language__text -center--flex">
+                                                                            Python
+                                                                        </div>
+                                                                        <div class="language__icon -center--flex">
+                                                                            <img src="assets/python.png" class="language__icon__image">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                             <div class="languages__javascript">
-                                                                
+                                                                <div class="language">
+                                                                    <div class="language__grid">
+                                                                        <div class="language__text -center--flex">
+                                                                            JavaScript
+                                                                        </div>
+                                                                        <div class="language__icon -center--flex">
+                                                                            <img src="assets/javascript.png" class="language__icon__image">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                             <div class="languages__html">
-                                                                
+                                                                <div class="language">
+                                                                    <div class="language__grid">
+                                                                        <div class="language__text -center--flex">
+                                                                            HTML
+                                                                        </div>
+                                                                        <div class="language__icon -center--flex">
+                                                                            <img src="assets/html.png" class="language__icon__image">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                             <div class="languages__java">
-                                                                
+                                                                <div class="language">
+                                                                    <div class="language__grid">
+                                                                        <div class="language__text -center--flex">
+                                                                            Java
+                                                                        </div>
+                                                                        <div class="language__icon -center--flex">
+                                                                            <img src="assets/java.png" class="language__icon__image">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                             <div class="languages__sql">
-                                                                
+                                                                <div class="language">
+                                                                    <div class="language__grid">
+                                                                        <div class="language__text -center--flex">
+                                                                            SQL
+                                                                        </div>
+                                                                        <div class="language__icon -center--flex">
+                                                                            <img src="assets/sql.png" class="language__icon__image">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
