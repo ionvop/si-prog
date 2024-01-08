@@ -221,7 +221,7 @@
                                                 <div class="home__content__right__languages">
                                                     <div class="languages">
                                                         <div class="languages__grid">
-                                                            <div class="languages__python">
+                                                            <div class="languages__python" onclick="btnNew('python')">
                                                                 <div class="language">
                                                                     <div class="language__grid">
                                                                         <div class="language__text -center--flex">
@@ -233,7 +233,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="languages__javascript">
+                                                            <div class="languages__javascript" onclick="btnNew('javascript')">
                                                                 <div class="language">
                                                                     <div class="language__grid">
                                                                         <div class="language__text -center--flex">
@@ -245,7 +245,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="languages__html">
+                                                            <div class="languages__html" onclick="btnNew('html')">
                                                                 <div class="language">
                                                                     <div class="language__grid">
                                                                         <div class="language__text -center--flex">
@@ -257,7 +257,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="languages__java">
+                                                            <div class="languages__java" onclick="btnNew('java')">
                                                                 <div class="language">
                                                                     <div class="language__grid">
                                                                         <div class="language__text -center--flex">
@@ -269,7 +269,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="languages__sql">
+                                                            <div class="languages__sql" onclick="btnNew('sql')">
                                                                 <div class="language">
                                                                     <div class="language__grid">
                                                                         <div class="language__text -center--flex">
@@ -345,4 +345,9 @@
         </div>
     </body>
     <script src="script.js"></script>
+    <script>
+        function btnNew(language) {
+            location.href = "editor/?type=" + language;
+        }
+    </script>
 </html>

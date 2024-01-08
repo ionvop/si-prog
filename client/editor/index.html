@@ -1,0 +1,180 @@
+<html>
+    <head>
+        <base href="../">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            .page__grid {
+                height: 100%;
+                display: grid;
+                grid-template-rows: max-content 1fr max-content;
+            }
+
+            .page__title {
+                padding: 1rem;
+                text-align: center;
+                font-size: 2rem;
+                user-select: none;
+            }
+
+            .page__title__edit__input {
+                font-size: 2rem;
+            }
+
+            .page__editor {
+                padding: 1rem;
+            }
+
+            .editor {
+                background-color: #bfbfbf;
+            }
+
+            .editor__grid {
+                height: 100%;
+                display: grid;
+                grid-template-rows: 1fr max-content;
+            }
+
+            .editor__text {
+                padding: 1rem;
+            }
+
+            .editor__text__input {
+                width: 100%;
+                height: 100%;
+                font-size: 2rem;
+                background-color: transparent;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .editor__run {
+                padding: 1rem;
+            }
+
+            .editor__run__button {
+                width: 100%;
+                padding: 1rem;
+                font-size: 2rem;
+                background-color: #3d3c3e;
+                color: #ffffff;
+                font-weight: bolder;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main__editor">
+            <div class="-menu">
+                <div class="-menu__grid">
+                    <div class="-menu__content">
+                        <div class="page">
+                            <div class="page__grid">
+                                <div class="page__title test" onclick="inputTitleClick()">
+                                    Java / 
+                                    <span class="page__title__text">
+                                        Untitled
+                                    </span>
+                                    <span class="page__title__edit" style="display: none;">
+                                        <input class="page__title__edit__input" onblur="inputTitleUnfocus()">
+                                    </span>
+                                </div>
+                                <div class="page__editor">
+                                    <div class="editor">
+                                        <div class="editor__grid">
+                                            <div class="editor__text">
+                                                <textarea class="editor__text__input" onchange="inputCodeChange()"></textarea>
+                                            </div>
+                                            <div class="editor__run">
+                                                <button class="editor__run__button">
+                                                    Run
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="page__output">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="-menu__tabs">
+                        <div class="-menu__tabs__grid">
+                            <div class="-menu__tabs__home">
+                                <a href="menu/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            home
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__files">
+                                <a href="menu/files/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            folder
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__new">
+                                <a href="menu/new/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            add_circle
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__notifications">
+                                <a href="menu/notifications/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            notifications
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__profile">
+                                <a href="menu/profile/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            account_circle
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="script.js"></script>
+    <script>
+        let UrlParams = {};
+
+        for (let [key, value] of new URLSearchParams(location.search)) {
+            UrlParams[key] = value;
+        }
+
+        function inputCodeChange() {
+
+        }
+
+        function inputTitleClick() {
+            document.querySelector(".page__title__text").style.display = "none";
+            document.querySelector(".page__title__edit").style.display = "";
+            document.querySelector(".page__title__edit__input").value = document.querySelector(".page__title__text").innerText.trim();
+            document.querySelector(".page__title__edit__input").focus();
+        }
+
+        function inputTitleUnfocus() {
+            document.querySelector(".page__title__text").style.display = "";
+            document.querySelector(".page__title__edit").style.display = "none";
+            document.querySelector(".page__title__text").innerText = document.querySelector(".page__title__edit__input").value;
+        }
+    </script>
+</html>

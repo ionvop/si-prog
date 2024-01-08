@@ -89,7 +89,7 @@
             <div class="-menu">
                 <div class="-menu__grid">
                     <div class="-menu__content">
-                        <div class="ai test">
+                        <div class="ai">
                             <div class="ai__grid">
                                 <div class="ai__chat">
                                     <div class="ai__chat__render">
@@ -209,18 +209,30 @@
 
         function send() {
             document.querySelector(".ai__reply__send__button").style.display = "none";
-            
 
-            document.querySelector(".ai__chat__render").innerHTML += `
-                <div class="item--user">
-                    <div class="item--user__grid">
-                        <div></div>
-                        <div class="item--user__text">
-                            ${escapeHtml(document.querySelector(".ai__reply__input__text").value)}
-                        </div>
-                    </div>
-                </div>
-            `;
+            // document.querySelector(".ai__chat__render").innerHTML += `
+            //     <div class="item--user">
+            //         <div class="item--user__grid">
+            //             <div></div>
+            //             <div class="item--user__text">
+            //                 ${escapeHtml(document.querySelector(".ai__reply__input__text").value)}
+            //             </div>
+            //         </div>
+            //     </div>
+            // `;
+
+            let user = document.createElement("div");
+            user.className = "item--user";
+            let userGrid = document.createElement("div");
+            userGrid.className = "item--user__grid";
+            user.appendChild(userGrid);
+            let userBlank = document.createElement("div");
+            userGrid.appendChild(userBlank);
+            let userText = document.createElement("div");
+            userText.className = "item--user__text";
+            userText.innerHTML = convertNewlinesToBr(escapeHtml(document.querySelector(".ai__reply__input__text").value));
+            userGrid.appendChild(userText);
+            document.querySelector(".ai__chat__render").appendChild(user);
 
             history.push({
                 role: "user",
@@ -246,24 +258,54 @@
                             history.push(res.choices[0].message);
                             document.querySelector(".ai__reply__send__button").style.display = "";
 
-                            document.querySelector(".ai__chat__render").innerHTML += `
-                                <div class="item--ai">
-                                    <div class="item--ai__grid">
-                                        <div class="item--ai__icon">
-                                            <span class="material-symbols-rounded">
-                                                neurology
-                                            </span>
-                                        </div>
-                                        <div class="item--ai__text">
-                                            ${escapeHtml(res.choices[0].message.content)}
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
+                            // document.querySelector(".ai__chat__render").innerHTML += `
+                            //     <div class="item--ai">
+                            //         <div class="item--ai__grid">
+                            //             <div class="item--ai__icon">
+                            //                 <span class="material-symbols-rounded">
+                            //                     neurology
+                            //                 </span>
+                            //             </div>
+                            //             <div class="item--ai__text">
+                            //                 ${escapeHtml(res.choices[0].message.content)}
+                            //             </div>
+                            //         </div>
+                            //     </div>
+                            // `;
+
+                            let ai = document.createElement("div");
+                            ai.className = "item--ai";
+                            let aiGrid = document.createElement("div");
+                            aiGrid.className = "item--ai__grid";
+                            ai.appendChild(aiGrid);
+                            let aiIcon = document.createElement("div");
+                            aiIcon.className = "item--ai__icon";
+                            aiGrid.appendChild(aiIcon);
+                            let aiIconSpan = document.createElement("span");
+                            aiIconSpan.className = "material-symbols-rounded";
+                            aiIconSpan.textContent = "neurology";
+                            aiIcon.appendChild(aiIconSpan);
+                            let aiText = document.createElement("div");
+                            aiText.className = "item--ai__text";
+                            aiText.innerHTML = convertNewlinesToBr(escapeHtml(res.choices[0].message.content));
+                            aiGrid.appendChild(aiText);
+                            document.querySelector(".ai__chat__render").appendChild(ai);
                         }
                     )
                 }
             )
+        }
+
+        function convertNewlinesToBr(input) {
+            // Replace existing <br> tags with a placeholder
+            const placeholder = '__BR_TAG_PLACEHOLDER__';
+            const escapedInput = input.replace(/<br\s*\/?>/gi, placeholder);
+
+            // Replace newline characters with <br>
+            const result = escapedInput.replace(/\n/g, '<br>');
+
+            // Restore the original <br> tags
+            return result.replace(new RegExp(placeholder, 'g'), '<br>');
         }
     </script>
 </html>
