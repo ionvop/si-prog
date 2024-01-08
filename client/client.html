@@ -40,18 +40,47 @@
                                         return;
                                     }
 
+                                    cookieManager.setCookie("session", res.response)
                                     alert("Successfully registered!");
                                     location.href = "login/";
                                     break;
                                 case "login":
-                                if (res.status != 0) {
+                                    if (res.status != 0) {
                                         alert("Error: " + res.response);
                                         window.history.back();
                                         return;
                                     }
 
+                                    cookieManager.setCookie("session", res.response)
                                     alert("Successfully logged in!");
                                     location.href = "menu/";
+                                    break;
+                                case "new":
+                                    if (res.status != 0) {
+                                        alert("Error: " + res.response);
+                                        window.history.back();
+                                        return;
+                                    }
+
+                                    location.href = "editor/?id=" + res.response;
+                                    break;
+                                case "delete":
+                                    if (res.status != 0) {
+                                        alert("Error: " + res.response);
+                                        window.history.back();
+                                        return;
+                                    }
+
+                                    location.href = "menu/files/";
+                                    break;
+                                case "saveAndRun":
+                                    if (res.status != 0) {
+                                        alert("Error: " + res.response);
+                                        window.history.back();
+                                        return;
+                                    }
+
+                                    location.href = "editor/output/?id=" + res.response.id + "&output=" + encodeURIComponent(res.response.output);
                                     break;
                             }
                         }

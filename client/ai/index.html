@@ -201,12 +201,6 @@
             }
         )
 
-        function escapeHtml(text) {
-            let div = document.createElement("div");
-            div.appendChild(document.createTextNode(text.replace("/\n/g", "<br>")));
-            return div.innerHTML;
-        }
-
         function send() {
             document.querySelector(".ai__reply__send__button").style.display = "none";
 
@@ -294,18 +288,6 @@
                     )
                 }
             )
-        }
-
-        function convertNewlinesToBr(input) {
-            // Replace existing <br> tags with a placeholder
-            const placeholder = '__BR_TAG_PLACEHOLDER__';
-            const escapedInput = input.replace(/<br\s*\/?>/gi, placeholder);
-
-            // Replace newline characters with <br>
-            const result = escapedInput.replace(/\n/g, '<br>');
-
-            // Restore the original <br> tags
-            return result.replace(new RegExp(placeholder, 'g'), '<br>');
         }
     </script>
 </html>

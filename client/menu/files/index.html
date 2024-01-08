@@ -1,0 +1,377 @@
+<html>
+    <head>
+        <base href="../../">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            .material-symbols-rounded {
+                font-size: 5rem;
+            }
+
+            .files__grid {
+                display: grid;
+                grid-template-rows: max-content max-content 1fr max-content;
+                height: 100%;
+            }
+
+            .files__top__grid {
+                display: grid;
+                grid-template-columns: max-content 1fr max-content;
+            }
+
+            .files__top__grid > div {
+                padding: 1rem;
+            }
+
+            .files__filter {
+                padding: 1rem;
+            }
+
+            .filetype {
+                font-size: 3rem;
+                background-color: transparent;
+                color: #ffffff;
+                padding: 1rem;
+            }
+
+            .filetype * {
+                font-size: 0.7rem;
+                background-color: #3e3c3f;
+            }
+
+            .files__list {
+                padding: 1rem;
+            }
+
+            .list__item__grid {
+                display: grid;
+                grid-template-columns: max-content 1fr;
+            }
+
+            .list__item__icon {
+                padding: 1rem;
+            }
+
+            .list__item__info {
+                padding: 1rem;
+            }
+
+            .list__item__info__name {
+                font-size: 2rem;
+            }
+
+            .list__item__info__details {
+                font-size: 1.5rem;
+                margin-top: 1rem;
+                color: #9a9494;
+            }
+
+            .files__delete {
+                padding: 1rem;
+            }
+
+            .files__delete__grid {
+                display: grid;
+                grid-template-columns: 1fr max-content;
+            }
+
+            .files__delete__button {
+                padding: 1rem;
+            }
+
+            .delete {
+                background-color: #9a9494;
+                color: #000000;
+                padding: 1rem;
+                border-radius: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main__menu__files">
+            <div class="-menu">
+                <div class="-menu__grid">
+                    <div class="-menu__content">
+                        <div class="files">
+                            <div class="files__grid">
+                                <div class="files__top">
+                                    <div class="files__top__grid">
+                                        <div class="files__top__menu">
+                                            <button class="-button--icon">
+                                                <span class="material-symbols-rounded">
+                                                    menu
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div></div>
+                                        <div class="files__top__settings">
+                                            <button class="-button--icon">
+                                                <span class="material-symbols-rounded">
+                                                    construction
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="files__filter">
+                                    <select class="filetype" onchange="renderItems()">
+                                        <option value="all">
+                                            All
+                                        </option>
+                                        <option value="python">
+                                            Python
+                                        </option>
+                                        <option value="javascript">
+                                            JavaScript
+                                        </option>
+                                        <option value="html">
+                                            HTML
+                                        </option>
+                                        <option value="java">
+                                            Java
+                                        </option>
+                                        <option value="sql">
+                                            SQL
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="files__list">
+                                    <div class="list">
+                                        <div class="list__render">
+                                            <div class="list__item">
+                                                <div class="list__item__grid">
+                                                    <div class="list__item__icon">
+                                                        <span class="material-symbols-rounded">
+                                                            folder
+                                                        </span>
+                                                    </div>
+                                                    <div class="list__item__info">
+                                                        <div class="list__item__info__name">
+                                                            data.py
+                                                        </div>
+                                                        <div class="list__item__info__details">
+                                                            100KB | 2001-09-11
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="list__item">
+                                                <div class="list__item__grid">
+                                                    <div class="list__item__icon">
+                                                        <span class="material-symbols-rounded">
+                                                            folder
+                                                        </span>
+                                                    </div>
+                                                    <div class="list__item__info">
+                                                        <div class="list__item__info__name">
+                                                            data.py
+                                                        </div>
+                                                        <div class="list__item__info__details">
+                                                            100KB | 2001-09-11
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="files__delete">
+                                    <div class="files__delete__grid">
+                                        <div></div>
+                                        <div class="files__delete__button">
+                                            <div class="delete" onclick="btnDeleteClick()">
+                                                <span class="material-symbols-rounded">
+                                                    delete
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="-menu__tabs">
+                        <div class="-menu__tabs__grid">
+                            <div class="-menu__tabs__home">
+                                <a href="menu/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            home
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__files">
+                                <a href="menu/files/">
+                                    <button class="-button--icon -menu__tabs__selected">
+                                        <span class="material-symbols-rounded">
+                                            folder
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__new">
+                                <a href="menu/new/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            add_circle
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__notifications">
+                                <a href="menu/notifications/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            notifications
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__profile">
+                                <a href="menu/profile/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            account_circle
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="script.js"></script>
+    <script>
+        let isDelete = false;
+        let fileList = [];
+
+        let fileExtEnum = {
+            python: ".py",
+            javascript: ".js",
+            html: ".html",
+            java: ".java",
+            sql: ".sql"
+        }
+
+        fetch("config.json", {
+            method: "GET"
+        }).then(res => res.json()).then(
+            config => {
+                let data = {
+                    method: "getFiles",
+                    session: cookieManager.getCookie("session")
+                }
+
+                fetch(config.server, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                }).then(res => res.json()).then(
+                    res => {
+                        if (res.status != 0) {
+                            alert("Error: " + res.response);
+                            window.history.back();
+                            return;
+                        }
+
+                        fileList = res.response;
+                        renderItems();
+                    }
+                )
+            }
+        )
+
+        function renderItems() {
+            document.querySelector(".list__render").innerHTML = "";
+
+            fileList.forEach(element => {
+                if (document.querySelector(".filetype").value != "all") {
+                    if (document.querySelector(".filetype").value != element.language) {
+                        return;
+                    }
+                }
+
+                let listItem = document.createElement("div");
+                listItem.className = "list__item";
+                listItem.setAttribute("onclick", `btnItemClick('${element.id}', '${element.name}')`)
+                let listItemGrid = document.createElement("div");
+                listItemGrid.className = "list__item__grid";
+                listItem.appendChild(listItemGrid);
+                let listItemIcon = document.createElement("div");
+                listItemIcon.className = "list__item__icon";
+                listItemGrid.appendChild(listItemIcon);
+                let listItemIconSpan = document.createElement("span");
+                listItemIconSpan.className = "material-symbols-rounded";
+                listItemIconSpan.textContent = "folder";
+                listItemIcon.appendChild(listItemIconSpan);
+                let listItemInfo = document.createElement("div");
+                listItemInfo.className = "list__item__info";
+                listItemGrid.appendChild(listItemInfo);
+                let listItemInfoName = document.createElement("div");
+                listItemInfoName.className = "list__item__info__name";
+                listItemInfoName.textContent = element.name + fileExtEnum[element.language];
+                listItemInfo.appendChild(listItemInfoName);
+                let listItemInfoDetails = document.createElement("div");
+                listItemInfoDetails.className = "list__item__info__details";
+                listItemInfoDetails.textContent = formatBytes(element.content.length) + " | " + formateTime(element.time);
+                listItemInfo.appendChild(listItemInfoDetails);
+                document.querySelector(".list__render").appendChild(listItem);
+            });
+        }
+
+        function btnItemClick(fileId, fileName) {
+            if (isDelete) {
+                if (confirm("Are you sure you want to delete " + fileName + "?")) {
+                    getRequest("../../client.html", {
+                        method: "delete",
+                        file: fileId,
+                        session: cookieManager.getCookie("session")
+                    });
+                }
+
+                return;
+            }
+
+            location.href = "editor/?id=" + fileId;
+        }
+
+        function btnDeleteClick() {
+            if (isDelete) {
+                isDelete = false;
+                document.querySelector(".delete").style.color = "";
+                return;
+            }
+
+            isDelete = true;
+            document.querySelector(".delete").style.color = "#e96360";
+        }
+
+        function formatBytes(bytes) {
+            const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+            let unitIndex = 0;
+
+            while (bytes >= 1024 && unitIndex < units.length - 1) {
+                bytes /= 1024;
+                unitIndex++;
+            }
+
+            return bytes.toFixed(0) + units[unitIndex];
+        }
+
+        function formateTime(timestamp) {
+            const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-indexed
+            const day = date.getDate().toString().padStart(2, '0');
+
+            return `${year}-${month}-${day}`;
+        }
+    </script>
+</html>

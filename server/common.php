@@ -98,4 +98,55 @@ function NewSession($userId) {
     return $newSession["id"];
 }
 
+function AuthenticateUser($sessionId) {
+    $data = GetSiteData();
+
+    $sessionIndex = FindIndex($data["sessions"], "id", $sessionId);
+
+    if ($sessionIndex == -1) {
+        return false;
+    }
+
+    $session = $data["sessions"][$sessionIndex];
+    
+    if (time() > $session["expiry"]) {
+        return false;
+    }
+
+    $userIndex = FindIndex($data["users"], "id", $session["userid"]);
+
+    if ($userIndex == -1) {
+        return false;
+    }
+
+    $user = $data["users"][$userIndex];
+
+    return $user["id"];
+}
+
+function SendCurl($url, $method, $headers, $data) {
+    $ch = curl_init();
+    
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+    // $headers = array();
+    // $headers[] = "Content-Type: application/json";
+    // $headers[] = "Accept: application/json";
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+    $result = curl_exec($ch);
+
+    if (curl_errno($ch)) {
+        echo 'Error:' . curl_error($ch);
+    }
+
+    curl_close($ch);
+    return $result;
+}
+
 ?>

@@ -347,7 +347,11 @@
     <script src="script.js"></script>
     <script>
         function btnNew(language) {
-            location.href = "editor/?type=" + language;
+            getRequest("../client.html", {
+                method: "new",
+                language: language,
+                session: cookieManager.getCookie("session")
+            });
         }
     </script>
 </html>
