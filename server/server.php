@@ -28,6 +28,12 @@ if (isset($_POST["method"])) {
         case "saveAndRun":
             Save(true);
             break;
+        case "checkSession":
+            CheckSession();
+            break;
+        case "upload":
+            Upload();
+            break;
     }
 } else {
     DefaultMethod();
@@ -398,6 +404,59 @@ function Save($isRun) {
 
     $res["status"] = 0;
     $res["response"] = $file["id"];
+    exit(json_encode($res));
+}
+
+function CheckSession() {
+    $data = GetSiteData();
+
+    $res = [
+        "status" => 0,
+        "response" => ""
+    ];
+
+    $userId = AuthenticateUser($_POST["session"]);
+
+    if ($userId == false) {
+        $res["status"] = 0;
+        $res["response"] = "0";
+        exit(json_encode($res));
+    }
+
+    $res["status"] = 0;
+    $res["response"] = NewSession($userId);
+    exit(json_encode($res));
+}
+
+function Upload() {
+    $data = GetSiteData();
+
+    $res = [
+        "status" => 0,
+        "response" => ""
+    ];
+
+    $userId = AuthenticateUser($_POST["session"]);
+
+    if ($userId == false) {
+        $res["status"] = 1;
+        $res["response"] = "Session expired.";
+        exit(json_encode($res));
+    }
+
+    $newFile = [
+        "id" => uniqid("file"),
+        "name" => "Untitled",
+        "author" => $userId,
+        "language" => $_POST["language"],
+        "content" => $_POST["content"],
+        "time" => time()
+    ];
+
+    $data["files"][] = $newFile;
+    SetSiteData($data);
+    $res["status"] = 0;
+    $res["response"] = $newFile["id"];
     exit(json_encode($res));
 }
 

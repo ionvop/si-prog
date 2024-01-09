@@ -40,7 +40,7 @@
                                         return;
                                     }
 
-                                    cookieManager.setCookie("session", res.response)
+                                    sessionStorage.setItem("session", res.response)
                                     alert("Successfully registered!");
                                     location.href = "login/";
                                     break;
@@ -51,7 +51,7 @@
                                         return;
                                     }
 
-                                    cookieManager.setCookie("session", res.response)
+                                    sessionStorage.setItem("session", res.response)
                                     alert("Successfully logged in!");
                                     location.href = "menu/";
                                     break;
@@ -81,6 +81,15 @@
                                     }
 
                                     location.href = "editor/output/?id=" + res.response.id + "&output=" + encodeURIComponent(res.response.output);
+                                    break;
+                                case "upload":
+                                    if (res.status != 0) {
+                                        alert("Error: " + res.response);
+                                        window.history.back();
+                                        return;
+                                    }
+
+                                    location.href = "editor/?id=" + res.response;
                                     break;
                             }
                         }

@@ -1,0 +1,150 @@
+<html>
+    <head>
+        <base href="../../">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            .new {
+                height: 100%;
+            }
+
+            .new__panel {
+                font-size: 3rem;
+                background-color: #8c8787;
+                padding: 3rem;
+                width: 70%;
+                color: #41393b;
+                font-weight: bolder;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main__menu__new">
+            <div class="-menu">
+                <div class="-menu__grid">
+                    <div class="-menu__content">
+                        <div class="new -center--flex">
+                            <div class="new__panel -center--flex" onclick="btnUploadClick()">
+                                Upload files
+                            </div>
+                        </div>
+                    </div>
+                    <div class="-menu__tabs">
+                        <div class="-menu__tabs__grid">
+                            <div class="-menu__tabs__home">
+                                <a href="menu/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            home
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__files">
+                                <a href="menu/files/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            folder
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__new">
+                                <a href="menu/new/">
+                                    <button class="-button--icon -menu__tabs__selected">
+                                        <span class="material-symbols-rounded">
+                                            add_circle
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__notifications">
+                                <a href="menu/notifications/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            notifications
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="-menu__tabs__profile">
+                                <a href="menu/profile/">
+                                    <button class="-button--icon -menu__tabs__icon">
+                                        <span class="material-symbols-rounded">
+                                            account_circle
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="script.js"></script>
+    <script>
+        function promptForFileContent() {
+            return new Promise((resolve, reject) => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.py,.js,.html,.java,.sql'; // Specify accepted file extensions
+
+                input.addEventListener('change', () => {
+                const file = input.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+
+                    reader.onload = (event) => {
+                    const fileContent = event.target.result;
+                    const fileInfo = {
+                        content: fileContent,
+                        filename: file.name
+                    };
+                    resolve(fileInfo);
+                    };
+
+                    reader.onerror = (event) => {
+                    reject(`Error reading file: ${event.target.error.message}`);
+                    };
+
+                    reader.readAsText(file);
+                } else {
+                    reject('No file selected');
+                }
+            });
+
+            // Trigger the file input dialog
+            input.click();
+        });
+        }
+
+        function btnUploadClick() {
+            promptForFileContent().then(
+                file => {
+                    let fileTypeEnum = {
+                        py: "python",
+                        js: "javascript",
+                        html: "html",
+                        java: "java",
+                        sql: "sql"
+                    }
+
+                    getRequest("../../client.html", {
+                        method: "upload",
+                        language: fileTypeEnum[getFileType(file.filename)],
+                        content: file.content,
+                        session: sessionStorage.getItem("session")
+                    });
+                }
+            )
+        }
+
+        function getFileType(fileName) {
+            let result = fileName.split(".");
+            return result[result.length - 1];
+        }
+    </script>
+</html>

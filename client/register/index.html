@@ -71,4 +71,40 @@
         </div>
     </body>
     <script src="script.js"></script>
+    <script>
+        fetch("config.json", {
+            method: "GET"
+        }).then(res => res.json()).then(
+            config => {
+                let data = {
+                    method: "checkSession",
+                    session: sessionStorage.getItem("session")
+                }
+
+                fetch(config.server, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                }).then(res => res.json()).then(
+                    res => {
+                        if (res.status != 0) {
+                            alert("Error: " + res.response);
+                            window.history.back();
+                            return;
+                        }
+
+                        if (res.response != "0") {
+                            sessionStorage.getItem("session", res.response);
+                            location.href = "menu/"
+                            return;
+                        }
+
+                        sessionStorage.clear();
+                    }
+                )
+            }
+        )
+    </script>
 </html>

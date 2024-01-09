@@ -181,6 +181,11 @@
     <script src="script.js"></script>
     <script>
         let history;
+        let urlParams = {};
+
+        for (let [key, value] of new URLSearchParams(location.search)) {
+            urlParams[key] = value;
+        }
 
         fetch("assets/prompt.txt").then(res => res.text()).then(
             prompt => {
@@ -198,6 +203,13 @@
                         content: "Hi!!! I am Betty.\nHow can I assist you today?"
                     }
                 ]
+
+                if (urlParams.type == "review") {
+                    document.querySelector(".item--ai__text").innerHTML = "Reviewing your code..."
+                    document.querySelector(".ai__reply__input__text").value = "Does the following code have any problems and does it require any improvements:\n\n" + urlParams.content;
+                    send();
+                    document.querySelector(".item--user").style.display = "none";
+                }
             }
         )
 

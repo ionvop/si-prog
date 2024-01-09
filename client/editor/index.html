@@ -102,7 +102,7 @@
                                                 <button class="editor__run__button" onclick="btnRunClick()">
                                                     Run
                                                 </button>
-                                                <button class="editor__run__ai">
+                                                <button class="editor__run__ai" onclick="btnAiClick()">
                                                     AI Review
                                                 </button>
                                             </div>
@@ -189,7 +189,7 @@
                 let data = {
                     method: "getFile",
                     file: urlParams.id,
-                    session: cookieManager.getCookie("session")
+                    session: sessionStorage.getItem("session")
                 }
 
                 fetch(config.server, {
@@ -236,8 +236,15 @@
             getRequest("../client.html", {
                 method: "saveAndRun",
                 file: urlParams.id,
-                session: cookieManager.getCookie("session"),
+                session: sessionStorage.getItem("session"),
                 name: document.querySelector(".page__title__text").innerText.trim(),
+                content: document.querySelector(".editor__text__input").value
+            })
+        }
+
+        function btnAiClick() {
+            getRequest("../ai/", {
+                type: "review",
                 content: document.querySelector(".editor__text__input").value
             })
         }

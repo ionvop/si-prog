@@ -350,7 +350,7 @@
             getRequest("../client.html", {
                 method: "new",
                 language: language,
-                session: cookieManager.getCookie("session")
+                session: sessionStorage.getItem("session")
             });
         }
     </script>

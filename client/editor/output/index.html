@@ -140,7 +140,7 @@
                 let data = {
                     method: "getFile",
                     file: urlParams.id,
-                    session: cookieManager.getCookie("session")
+                    session: sessionStorage.getItem("session")
                 }
 
                 fetch(config.server, {

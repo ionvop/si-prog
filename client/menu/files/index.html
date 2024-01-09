@@ -263,7 +263,7 @@
             config => {
                 let data = {
                     method: "getFiles",
-                    session: cookieManager.getCookie("session")
+                    session: sessionStorage.getItem("session")
                 }
 
                 fetch(config.server, {
@@ -331,7 +331,7 @@
                     getRequest("../../client.html", {
                         method: "delete",
                         file: fileId,
-                        session: cookieManager.getCookie("session")
+                        session: sessionStorage.getItem("session")
                     });
                 }
 
