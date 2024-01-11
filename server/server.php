@@ -37,6 +37,9 @@ if (isset($_POST["method"])) {
         case "getUser":
             GetUser();
             break;
+        case "updateDescription":
+            UpdateDescription();
+            break;
     }
 } else {
     DefaultMethod();
@@ -493,6 +496,37 @@ function GetUser() {
     $user = $data["users"][$userIndex];
     $res["status"] = 0;
     $res["response"] = $user;
+    exit(json_encode($res));
+}
+
+function UpdateDescription() {
+    $data = GetSiteData();
+
+    $res = [
+        "status" => 0,
+        "response" => ""
+    ];
+
+    $userId = AuthenticateUser($_POST["session"]);
+
+    if ($userId == false) {
+        $res["status"] = 1;
+        $res["response"] = "Session expired.";
+        exit(json_encode($res));
+    }
+
+    $userIndex = FindIndex($data["users"], "id", $userId);
+
+    if ($userIndex == -1) {
+        $res["status"] = 1;
+        $res["response"] = "User not found.";
+        exit(json_encode($res));
+    }
+
+    $data["users"][$userIndex]["description"] = $_POST["description"];
+    SetSiteData($data);
+    $res["status"] = 0;
+    $res["response"] = "Successfully updated description";
     exit(json_encode($res));
 }
 

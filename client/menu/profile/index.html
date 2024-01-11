@@ -154,7 +154,7 @@
                                         </div>
                                         <div></div>
                                         <div class="grid__details__buttons__edit -center--flex">
-                                            <button class="grid__details__buttons__edit__logo">
+                                            <button class="grid__details__buttons__edit__button" onclick="btnEditClick()">
                                                 EDIT
                                             </button>
                                         </div>
@@ -261,6 +261,41 @@
                 console.error('Invalid file path:', filePath);
                 return null;
             }
+        }
+
+        function convertDivToTextarea(divElement) {
+            // Create a new textarea element
+            const textareaElement = document.createElement('textarea');
+
+            // Preserve the text content of the div
+            textareaElement.value = divElement.textContent;
+
+            // Copy attributes from the div to the textarea (optional)
+            for (const attr of divElement.attributes) {
+                textareaElement.setAttribute(attr.name, attr.value);
+            }
+
+            // Replace the div with the textarea in the DOM
+            divElement.parentNode.replaceChild(textareaElement, divElement);
+
+            // Optionally, focus the textarea
+            textareaElement.focus();
+        }
+
+        function btnEditClick() {
+            if (document.querySelector(".grid__details__buttons__edit__button").textContent == "SAVE") {
+                getRequest("../../client.html", {
+                    method: "updateDescription",
+                    description: document.querySelector(".grid__details__content").value,
+                    session: sessionStorage.getItem("session")
+                });
+
+                return;
+            }
+
+            document.querySelector(".grid__details__buttons__edit__button").textContent = "SAVE";
+            convertDivToTextarea(document.querySelector(".grid__details__content"));
+            document.querySelector(".grid__details__content").style.color = "#ffffff";
         }
     </script>
 </html>

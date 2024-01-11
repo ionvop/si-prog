@@ -91,6 +91,15 @@
 
                                     location.href = "editor/?id=" + res.response;
                                     break;
+                                case "updateDescription":
+                                    if (res.status != 0) {
+                                        alert("Error: " + res.response);
+                                        window.history.back();
+                                        return;
+                                    }
+
+                                    location.href = "menu/profile/";
+                                    break;
                             }
                         }
                     ).catch(
