@@ -34,6 +34,9 @@ if (isset($_POST["method"])) {
         case "upload":
             Upload();
             break;
+        case "getUser":
+            GetUser();
+            break;
     }
 } else {
     DefaultMethod();
@@ -88,7 +91,10 @@ function Register() {
         "name" => $_POST["name"],
         "email" => $_POST["email"],
         "hash" => "",
-        "avatar" => "uploads/default.jpg"
+        "avatar" => "uploads/default.jpg",
+        "fullname" => $_POST["name"],
+        "description" => "Hello, world!",
+        "time" => time(),
     ];
 
     $newUser["hash"] = PasswordStretch($newUser["id"], $_POST["password"]);
@@ -457,6 +463,36 @@ function Upload() {
     SetSiteData($data);
     $res["status"] = 0;
     $res["response"] = $newFile["id"];
+    exit(json_encode($res));
+}
+
+function GetUser() {
+    $data = GetSiteData();
+
+    $res = [
+        "status" => 0,
+        "response" => ""
+    ];
+
+    $userId = AuthenticateUser($_POST["session"]);
+
+    if ($userId == false) {
+        $res["status"] = 1;
+        $res["response"] = "Session expired.";
+        exit(json_encode($res));
+    }
+
+    $userIndex = FindIndex($data["users"], "id", $userId);
+
+    if ($userIndex == -1) {
+        $res["status"] = 1;
+        $res["response"] = "User not found.";
+        exit(json_encode($res));
+    }
+
+    $user = $data["users"][$userIndex];
+    $res["status"] = 0;
+    $res["response"] = $user;
     exit(json_encode($res));
 }
 

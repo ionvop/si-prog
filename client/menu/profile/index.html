@@ -5,26 +5,112 @@
         <link rel="stylesheet" href="style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
+            .material-symbols-rounded {
+                font-size: 5rem;
+            }
+            
             .grid__profile {
                 display: grid;
-                grid-template-rows: 5rem max-content max-content 1fr max-content;
+                grid-template-rows: 15rem max-content max-content 1fr max-content;
                 height: 100%;
             }
 
             .grid__profile__cover {
-                background-color: #323639;
+                background-color: #9a9494;
             }
 
             .avatar {
                 position: absolute;
                 width: max-content;
-                left: 0rem;
-                bottom: 0rem;
+                left: 3rem;
+                top: 5rem;
+                border-radius: 100%;
+                overflow: hidden;
             }
 
             .avatar > img {
-                width: 3rem;
-                height: 3rem;
+                width: 10rem;
+                height: 10rem;
+            }
+
+            .grid__profile__name {
+                display: grid;
+                grid-template-columns: 1fr max-content;
+                border-bottom: 0.5rem solid #9a9494;
+            }
+
+            .grid__profile__name__text {
+                display: grid;
+                grid-template-rows: max-content max-content;
+            }
+
+            .grid__profile__name__text__fullname {
+                padding: 1rem;
+                font-size: 2rem;
+            }
+
+            .grid__profile__name__text__username {
+                padding: 1rem;
+                font-size: 2rem;
+            }
+
+            .grid__profile__name__options {
+                padding: 1rem;
+            }
+
+            .grid__profile__tabs {
+                display: grid;
+                grid-template-columns: max-content max-content 1fr;
+            }
+
+            .grid__profile__tabs__info {
+                padding: 1rem;
+                font-size: 2rem;
+                border-bottom: 0.5rem solid #9a9494;
+            }
+
+            .grid__profile__tabs__awards {
+                padding: 1rem;
+                font-size: 2rem;
+            }
+
+            .grid__profile__panel {
+                padding: 1rem;
+            }
+
+            .grid__details {
+                display: grid;
+                grid-template-rows: 1fr max-content;
+                height: 100%;
+            }
+
+            .grid__details__content {
+                background-color: #4a484a;
+                padding: 1rem;
+                font-size: 2rem;
+                white-space: pre;
+            }
+
+            .grid__details__buttons {
+                display: grid;
+                grid-template-columns: max-content 1fr max-content;
+            }
+
+            .grid__details__buttons__logo {
+                padding: 1rem;
+            }
+
+            .grid__details__buttons__logo > img {
+                width: 15rem;
+            }
+
+            .grid__details__buttons__edit {
+                padding: 1rem;
+            }
+
+            .grid__details__buttons__edit > button {
+                font-size: 2rem;
+                padding: 1rem;
             }
         </style>
     </head>
@@ -36,19 +122,15 @@
                         <div class="grid__profile">
                             <div class="grid__profile__cover">
                                 <div class="avatar">
-                                    <img src="assets/html.png">
+                                    <img src="assets/image.png">
                                 </div>
                             </div>
                             <div class="grid__profile__name">
                                 <div class="grid__profile__name__text">
-                                    <div class="grid__profile__name__text__fullname">
-                                        Charlie John F. Arcamo
-                                    </div>
-                                    <div class="grid__profile__name__text__username">
-                                        Chrly
-                                    </div>
+                                    <div class="grid__profile__name__text__fullname"></div>
+                                    <div class="grid__profile__name__text__username"></div>
                                 </div>
-                                <div class="grid__profile__name__options">
+                                <div class="grid__profile__name__options -center--flex">
                                     <span class="material-symbols-rounded">
                                         settings
                                     </span>
@@ -61,23 +143,17 @@
                                 <div class="grid__profile__tabs__awards">
                                     Awards
                                 </div>
+                                <div></div>
                             </div>
                             <div class="grid__profile__panel">
                                 <div class="grid__details">
-                                    <div class="grid__details__content">
-                                        Name: Charlie John F. Arcamo<br><br>
-                                        Code-Name: Chrly<br><br>
-                                        Age: 21<br><br>
-                                        Birthday: October 8, 2002<br><br>
-                                        Address: Brgy. Mankilam, Tagum City<br><br>
-                                        School/University/Institute: STI Tagum College
-                                    </div>
+                                    <div class="grid__details__content"></div>
                                     <div class="grid__details__buttons">
                                         <div class="grid__details__buttons__logo">
                                             <img src="assets/image2.png">
                                         </div>
                                         <div></div>
-                                        <div class="grid__details__buttons__edit">
+                                        <div class="grid__details__buttons__edit -center--flex">
                                             <button class="grid__details__buttons__edit__logo">
                                                 EDIT
                                             </button>
@@ -142,6 +218,49 @@
     </body>
     <script src="script.js"></script>
     <script>
+        fetch("config.json", {
+            method: "GET"
+        }).then(res => res.json()).then(
+            config => {
+                let data = {
+                    method: "getUser",
+                    session: sessionStorage.getItem("session")
+                }
 
+                fetch(config.server, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                }).then(res => res.json()).then(
+                    res => {
+                        if (res.status != 0) {
+                            alert("Error: " + res.response);
+                            window.history.back();
+                            return;
+                        }
+
+                        document.querySelector(".grid__profile__name__text__fullname").textContent = res.response.fullname;
+                        document.querySelector(".grid__profile__name__text__username").textContent = "(" + res.response.name + ")";
+                        document.querySelector(".grid__details__content").textContent = res.response.description;
+                        document.querySelector(".avatar > img").src = getParentDirectory(config.server) + "uploads/" + res.response.avatar;
+                    }
+                )
+            }
+        )
+
+        function getParentDirectory(filePath) {
+            try {
+                const url = new URL(filePath);
+                const pathArray = url.pathname.split('/');
+                pathArray.pop(); // Remove the file or empty string at the end
+                const parentDirectory = url.origin + pathArray.join('/') + '/';
+                return parentDirectory;
+            } catch (error) {
+                console.error('Invalid file path:', filePath);
+                return null;
+            }
+        }
     </script>
 </html>
