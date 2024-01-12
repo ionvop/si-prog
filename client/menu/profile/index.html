@@ -130,7 +130,7 @@
                                     <div class="grid__profile__name__text__fullname"></div>
                                     <div class="grid__profile__name__text__username"></div>
                                 </div>
-                                <div class="grid__profile__name__options -center--flex">
+                                <div class="grid__profile__name__options -center--flex" onclick="btnSettingsClick()">
                                     <span class="material-symbols-rounded">
                                         settings
                                     </span>
@@ -296,6 +296,10 @@
             document.querySelector(".grid__details__buttons__edit__button").textContent = "SAVE";
             convertDivToTextarea(document.querySelector(".grid__details__content"));
             document.querySelector(".grid__details__content").style.color = "#ffffff";
+        }
+
+        function btnSettingsClick() {
+            location.href = "menu/profile/edit/";
         }
     </script>
 </html>

@@ -40,6 +40,9 @@ if (isset($_POST["method"])) {
         case "updateDescription":
             UpdateDescription();
             break;
+        case "updateProfile":
+            UpdateProfile();
+            break;
     }
 } else {
     DefaultMethod();
@@ -91,7 +94,7 @@ function Register() {
 
     $newUser = [
         "id" => uniqid("user", false),
-        "name" => $_POST["name"],
+        "name" => explode('@', $_POST["email"])[0] . rand(1000, 9999),
         "email" => $_POST["email"],
         "hash" => "",
         "avatar" => "uploads/default.jpg",
@@ -530,8 +533,92 @@ function UpdateDescription() {
     exit(json_encode($res));
 }
 
+function UpdateProfile() {
+    $data = GetSiteData();
+
+    $res = [
+        "status" => 0,
+        "response" => ""
+    ];
+
+    $userId = AuthenticateUser($_POST["session"]);
+
+    if ($userId == false) {
+        $res["status"] = 1;
+        $res["response"] = "Session expired.";
+        exit(json_encode($res));
+    }
+
+    $userIndex = FindIndex($data["users"], "id", $userId);
+
+    if ($userIndex == -1) {
+        $res["status"] = 1;
+        $res["response"] = "User not found.";
+        exit(json_encode($res));
+    }
+
+    $user = $data["users"][$userIndex];
+    
+    if ($_POST["fullname"] != $user["fullname"]) {
+        $data["users"][$userIndex]["fullname"] = $_POST["fullname"];
+    }
+
+    if ($_POST["username"] != $user["name"]) {
+        if (FindIndex($data["users"], "name", $_POST["username"]) != -1) {
+            $res["status"] = 1;
+            $res["response"] = "Username already taken.";
+            exit(json_encode($res));
+        }
+
+        $data["users"][$userIndex]["name"] = $_POST["username"];
+    }
+
+    if ($_POST["email"] != $user["email"]) {
+        if (FindIndex($data["users"], "email", $_POST["email"])) {
+            $res["status"] = 1;
+            $res["response"] = "Email already taken.";
+            exit(json_encode($res));
+        }
+
+        $data["users"][$userIndex]["email"] = $_POST["email"];
+    }
+
+    if ($_POST["password"] != "" || $_POST["newpassword"] != "" || $_POST["repassword"] != "") {
+        if (PasswordStretch($user["id"], $_POST["password"]) != $user["hash"]) {
+            $res["status"] = 1;
+            $res["response"] = "Password is incorrect.";
+            exit(json_encode($res));
+        }
+
+        if ($_POST["newpassword"] == "") {
+            $res["status"] = 1;
+            $res["response"] = "The password is empty.";
+            exit(json_encode($res));
+        }
+    
+        if ($_POST["newpassword"] != $_POST["repassword"]) {
+            $res["status"] = 1;
+            $res["response"] = "The passwords do not match.";
+            exit(json_encode($res));
+        }
+    
+        if (strlen($_POST["newpassword"]) < 4) {
+            $res["status"] = 1;
+            $res["response"] = "Your password is too short. Please have atleast 4 characters.";
+            exit(json_encode($res));
+        }
+
+        $data["users"][$userIndex]["hash"] = PasswordStretch($user["id"], $_POST["newpassword"]);
+    }
+
+    SetSiteData($data);
+    $res["status"] = 0;
+    $res["response"] = "Successfully update profile";
+    exit(json_encode($res));
+}
+
 function DefaultMethod() {
-    echo "Penis";
+    echo "Hello, world!";
 }
 
 ?>

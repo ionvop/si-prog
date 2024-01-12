@@ -1,0 +1,229 @@
+<html>
+    <head>
+        <base href="../../../">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            .material-symbols-rounded {
+                font-size: 5rem;
+            }
+
+            .container {
+                height: 100%;
+                overflow: auto;
+            }
+
+            .grid__edit {
+                display: grid;
+                grid-template-rows: max-content;
+            }
+
+            .grid__edit__top {
+                display: grid;
+                grid-template-columns: max-content 1fr;
+            }
+
+            .grid__edit__top__back {
+                padding: 1rem;
+            }
+
+            .grid__edit__avatar {
+                padding: 1rem;
+            }
+
+            .grid__edit__avatar__container {
+                width: 20rem;
+                height: 20rem;
+                border-radius: 100%;
+                overflow: hidden;
+            }
+
+            .grid__edit__avatar__container > img {
+                width: 20rem;
+                height: 20rem;
+            }
+
+            .grid__edit__field {
+                padding: 1rem;
+            }
+
+            .grid__edit__field > input {
+                font-size: 2rem;
+                padding: 1rem;
+                width: 100%;
+            }
+
+            .grid__edit__field__label {
+                font-size: 2rem;
+                padding: 1rem;
+            }
+
+            .grid__edit__password-title {
+                padding: 1rem;
+                font-size: 3rem;
+                font-weight: bolder;
+            }
+
+            .grid__edit__save {
+                padding: 1rem;
+            }
+
+            .grid__edit__save__button {
+                font-size: 3rem;
+                padding: 1rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main__menu__profile__edit">
+            <div class="container">
+                <div class="grid__edit">
+                    <div class="grid__edit__top">
+                        <div class="grid__edit__top__back">
+                            <span class="material-symbols-rounded">
+                                arrow_back
+                            </span>
+                        </div>
+                        <div></div>
+                    </div>
+                    <div class="grid__edit__avatar -center--flex">
+                        <div class="grid__edit__avatar__container">
+                            <img src="assets/image.png" onclick="btnAvatarClick()">
+                        </div>
+                    </div>
+                    <div class="grid__edit__field">
+                        <div class="grid__edit__field__label">
+                            Full name:
+                        </div>
+                        <input class="input__fullname">
+                    </div>
+                    <div class="grid__edit__field">
+                        <div class="grid__edit__field__label">
+                            Username:
+                        </div>
+                        <input class="input__username">
+                    </div>
+                    <div class="grid__edit__field">
+                        <div class="grid__edit__field__label">
+                            Email:
+                        </div>
+                        <input class="input__email">
+                    </div>
+                    <div class="grid__edit__password-title">
+                        Change password:
+                    </div>
+                    <div class="grid__edit__field">
+                        <div class="grid__edit__field__label">
+                            Password:
+                        </div>
+                        <input class="input__old-password" type="password">
+                    </div>
+                    <div class="grid__edit__field">
+                        <div class="grid__edit__field__label">
+                            New password:
+                        </div>
+                        <input class="input__change-password" type="password">
+                    </div>
+                    <div class="grid__edit__field">
+                        <div class="grid__edit__field__label">
+                            Confirm password:
+                        </div>
+                        <input class="input__confirm-password" type="password">
+                    </div>
+                    <div class="grid__edit__save -center--flex">
+                        <button class="grid__edit__save__button" onclick="btnSaveClick()">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="script.js"></script>
+    <script>
+        fetch("config.json", {
+            method: "GET"
+        }).then(res => res.json()).then(
+            config => {
+                let data = {
+                    method: "getUser",
+                    session: sessionStorage.getItem("session")
+                }
+
+                fetch(config.server, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                }).then(res => res.json()).then(
+                    res => {
+                        if (res.status != 0) {
+                            alert("Error: " + res.response);
+                            window.history.back();
+                            return;
+                        }
+
+                        document.querySelector(".grid__edit__avatar__container > img").src = getParentDirectory(config.server) + "uploads/" + res.response.avatar;
+                        document.querySelector(".input__fullname").value = res.response.fullname;
+                        document.querySelector(".input__username").value = res.response.name;
+                        document.querySelector(".input__email").value = res.response.email;
+                    }
+                )
+            }
+        )
+
+        function getParentDirectory(filePath) {
+            try {
+                const url = new URL(filePath);
+                const pathArray = url.pathname.split('/');
+                pathArray.pop(); // Remove the file or empty string at the end
+                const parentDirectory = url.origin + pathArray.join('/') + '/';
+                return parentDirectory;
+            } catch (error) {
+                console.error('Invalid file path:', filePath);
+                return null;
+            }
+        }
+
+        function btnAvatarClick() {
+            // Create an input element of type file
+            const inputElement = document.createElement('input');
+            inputElement.type = 'file';
+            inputElement.accept = "image/*";
+
+            // Set the onchange event to handle file selection
+            inputElement.onchange = function(event) {
+                const fileInput = event.target;
+                const file = fileInput.files[0];
+
+                if (file) {
+                // Read the selected file as a data URL
+                const reader = new FileReader();
+                reader.onload = function() {
+                    // Update the src attribute of the img element with the data URL
+                    document.querySelector('.grid__edit__avatar__container > img').src = reader.result;
+                };
+                reader.readAsDataURL(file);
+                }
+            };
+
+            // Trigger a click event on the input element
+            inputElement.click();
+        }
+
+        function btnSaveClick() {
+            getRequest("../../../client.html", {
+                method: "updateProfile",
+                session: sessionStorage.getItem("session"),
+                fullname: document.querySelector(".input__fullname").value,
+                username: document.querySelector(".input__username").value,
+                email: document.querySelector(".input__email").value,
+                password: document.querySelector(".input__old-password").value,
+                newpassword: document.querySelector(".input__change-password").value,
+                repassword: document.querySelector(".input__confirm-password").value
+            });
+        }
+    </script>
+</html>
