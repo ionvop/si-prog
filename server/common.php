@@ -124,6 +124,19 @@ function AuthenticateUser($sessionId) {
     return $user["id"];
 }
 
+function RenameFile($input, $new) {
+    $inputExt = explode(".", $input);
+    $inputExt = end($inputExt);
+    $inputExt = strtolower($inputExt);
+    $inputExt = ".".$inputExt;
+    return $new.$inputExt;
+}
+
+function IsValidJson($string) {
+    json_decode($string);
+    return (json_last_error() == JSON_ERROR_NONE);
+}
+
 function SendCurl($url, $method, $headers, $data) {
     $ch = curl_init();
     

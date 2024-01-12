@@ -3,7 +3,10 @@
 include("common.php");
 Debug();
 header("Content-Type: application/json");
-$_POST = json_decode(file_get_contents("php://input"), true);
+
+if (IsValidJson(file_get_contents("php://input"))) {
+    $_POST = json_decode(file_get_contents("php://input"), true);
+}
 
 if (isset($_POST["method"])) {
     switch ($_POST["method"]) {
@@ -609,6 +612,34 @@ function UpdateProfile() {
         }
 
         $data["users"][$userIndex]["hash"] = PasswordStretch($user["id"], $_POST["newpassword"]);
+    }
+
+    if (!empty($_FILES) && isset($_FILES["avatar"])) {
+        if ($_FILES["avatar"]["error"] != 4) {
+            if ($_FILES["avatar"]["size"] > 2000000) {
+                $res["status"] = 1;
+                $res["response"] = "File is too large.";
+                exit(json_encode($res));
+            }
+        
+            if ($_FILES["avatar"]["error"] != 0) {
+                $res["status"] = 1;
+                $res["response"] = "There was a problem uploading the file.";
+                exit(json_encode($res));
+            }
+        
+            $avatarName = $_FILES["avatar"]["name"];
+            $avatarName = RenameFile($avatarName, uniqid("avatar"));
+            $avatarPath = $_FILES["avatar"]["tmp_name"];
+        
+            if (move_uploaded_file($avatarPath, "uploads/{$avatarName}") == false) {
+                $res["status"] = 1;
+                $res["response"] = "There was a problem uploading the file.";
+                exit(json_encode($res));
+            }
+        
+            $data["users"][$userIndex]["avatar"] = $avatarName;
+        }
     }
 
     SetSiteData($data);

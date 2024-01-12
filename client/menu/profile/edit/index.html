@@ -80,7 +80,7 @@
             <div class="container">
                 <div class="grid__edit">
                     <div class="grid__edit__top">
-                        <div class="grid__edit__top__back">
+                        <div class="grid__edit__top__back" onclick="btnBackClick()">
                             <span class="material-symbols-rounded">
                                 arrow_back
                             </span>
@@ -142,10 +142,15 @@
     </body>
     <script src="script.js"></script>
     <script>
+        let newAvatar = "";
+        let server;
+
         fetch("config.json", {
             method: "GET"
         }).then(res => res.json()).then(
             config => {
+                server = config.server;
+
                 let data = {
                     method: "getUser",
                     session: sessionStorage.getItem("session")
@@ -197,6 +202,7 @@
             inputElement.onchange = function(event) {
                 const fileInput = event.target;
                 const file = fileInput.files[0];
+                newAvatar = file;
 
                 if (file) {
                 // Read the selected file as a data URL
@@ -214,7 +220,7 @@
         }
 
         function btnSaveClick() {
-            getRequest("../../../client.html", {
+            postRequest(server, {
                 method: "updateProfile",
                 session: sessionStorage.getItem("session"),
                 fullname: document.querySelector(".input__fullname").value,
@@ -222,8 +228,36 @@
                 email: document.querySelector(".input__email").value,
                 password: document.querySelector(".input__old-password").value,
                 newpassword: document.querySelector(".input__change-password").value,
-                repassword: document.querySelector(".input__confirm-password").value
+                repassword: document.querySelector(".input__confirm-password").value,
+                avatar: newAvatar
+            }).then(res => {
+                if (res.status != 0) {
+                    alert("Error: " + res.response);
+                    return;
+                }
+
+                location.href = "menu/profile/";
             });
+        }
+
+        function postRequest(targetUrl, queryParams) {
+            // Convert the object to a FormData object to handle file uploads
+            const formData = new FormData();
+            for (const key in queryParams) {
+                formData.append(key, queryParams[key]);
+            }
+
+            // Perform the POST request using fetch
+            return fetch(targetUrl, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .catch(error => console.error('Error:', error));
+        }
+
+        function btnBackClick() {
+            window.history.back();
         }
     </script>
 </html>
