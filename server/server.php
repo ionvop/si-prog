@@ -3,6 +3,7 @@
 include("common.php");
 Debug();
 header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
 
 if (IsValidJson(file_get_contents("php://input"))) {
     $_POST = json_decode(file_get_contents("php://input"), true);
@@ -368,45 +369,70 @@ function Save($isRun) {
     SetSiteData($data);
 
     if ($isRun) {
-        $authData = [
-            "clientId" => "8a9bfec4f5118076d2aad92aae8db0a2",
-            "clientSecret" => "13d331b2c7bae0326131082abde0ea31d27543d0ef8b05fa4e8b236dde630e57"
-        ];
+        // $authData = [
+        //     "clientId" => "8a9bfec4f5118076d2aad92aae8db0a2",
+        //     "clientSecret" => "13d331b2c7bae0326131082abde0ea31d27543d0ef8b05fa4e8b236dde630e57"
+        // ];
 
-        $token = SendCurl("https://api.jdoodle.com/v1/auth-token", "POST", ["Content-Type: application/json"], json_encode($authData));
+        // $token = SendCurl("https://api.jdoodle.com/v1/auth-token", "POST", ["Content-Type: application/json"], json_encode($authData));
 
-        $executionData = [
-            "script" => $_POST["content"],
-            "language" => "",
-            "versionIndex" => "0",
-            "token" => $token
-        ];
+        // $executionData = [
+        //     "script" => $_POST["content"],
+        //     "language" => "",
+        //     "versionIndex" => "0",
+        //     "token" => $token
+        // ];
 
-        switch ($file["language"]) {
-            case "python":
-                $executionData["language"] = "python3";
-                break;
-            case "javascript":
-                $executionData["language"] = "nodejs";
-                break;
-            case "java":
-                $executionData["language"] = "java";
-                break;
-            case "sql":
-                $executionData["language"] = "sql";
-                break;
-            default:
-                $res["response"] = [
-                    "id" => $file["id"],
-                    "output" => ""
-                ];
+        // switch ($file["language"]) {
+        //     case "python":
+        //         $executionData["language"] = "python3";
+        //         break;
+        //     case "javascript":
+        //         $executionData["language"] = "nodejs";
+        //         break;
+        //     case "java":
+        //         $executionData["language"] = "java";
+        //         break;
+        //     case "sql":
+        //         $executionData["language"] = "sql";
+        //         break;
+        //     default:
+        //         $res["response"] = [
+        //             "id" => $file["id"],
+        //             "output" => ""
+        //         ];
         
-                exit(json_encode($res));
-        }
+        //         exit(json_encode($res));
+        // }
 
-        $output = SendCurl("https://api.jdoodle.com/v1/execute", "POST", ["Content-Type: application/json"], json_encode($executionData));
-        $output = json_decode($output, true);
-        $output = $output["output"];
+        // $output = SendCurl("https://api.jdoodle.com/v1/execute", "POST", ["Content-Type: application/json"], json_encode($executionData));
+        // $output = json_decode($output, true);
+        // $output = $output["output"];
+
+        $headers = [
+            "Content-Type: application/json",
+            "Authorization: Bearer " . file_get_contents("../client/apikey.txt")
+        ];
+
+        $data = [
+            "model" => "gpt-3.5-turbo",
+            "messages" => [
+                [
+                    "role" => "system",
+                    "content" => "You will only respond with the output of the given " . $file["language"] . " source code, including errors."
+                ],
+                [
+                    "role" => "user",
+                    "content" => $_POST["content"]
+                ]
+            ]
+        ];
+
+        $response = SendCurl("https://api.openai.com/v1/chat/completions", "POST", $headers, json_encode($data));
+        $response = json_decode($response, true);
+        
+        $output = $response["choices"][0]["message"]["content"];
+
         $res["status"] = 0;
 
         $res["response"] = [

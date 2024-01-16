@@ -42,7 +42,7 @@
 
                                     sessionStorage.setItem("session", res.response)
                                     alert("Successfully registered!");
-                                    location.href = "login/";
+                                    location.href = "login/index.html";
                                     break;
                                 case "login":
                                     if (res.status != 0) {
@@ -53,7 +53,7 @@
 
                                     sessionStorage.setItem("session", res.response)
                                     alert("Successfully logged in!");
-                                    location.href = "menu/";
+                                    location.href = "menu/index.html";
                                     break;
                                 case "new":
                                     if (res.status != 0) {
@@ -62,7 +62,7 @@
                                         return;
                                     }
 
-                                    location.href = "editor/?id=" + res.response;
+                                    location.href = "editor/index.html?id=" + res.response;
                                     break;
                                 case "delete":
                                     if (res.status != 0) {
@@ -71,7 +71,7 @@
                                         return;
                                     }
 
-                                    location.href = "menu/files/";
+                                    location.href = "menu/files/index.html";
                                     break;
                                 case "saveAndRun":
                                     if (res.status != 0) {
@@ -80,7 +80,7 @@
                                         return;
                                     }
 
-                                    location.href = "editor/output/?id=" + res.response.id + "&output=" + encodeURIComponent(res.response.output);
+                                    location.href = "editor/output/index.html?id=" + res.response.id + "&output=" + encodeURIComponent(res.response.output);
                                     break;
                                 case "upload":
                                     if (res.status != 0) {
@@ -89,7 +89,7 @@
                                         return;
                                     }
 
-                                    location.href = "editor/?id=" + res.response;
+                                    location.href = "editor/index.html?id=" + res.response;
                                     break;
                                 case "updateDescription":
                                     if (res.status != 0) {
@@ -98,7 +98,7 @@
                                         return;
                                     }
 
-                                    location.href = "menu/profile/";
+                                    location.href = "menu/profile/index.html";
                                     break;
                                 case "updateProfile":
                                     if (res.status != 0) {
@@ -107,7 +107,7 @@
                                         return;
                                     }
 
-                                    location.href = "menu/profile/";
+                                    location.href = "menu/profile/index.html";
                                     break;
                             }
                         }

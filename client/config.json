@@ -1,3 +1,4 @@
 {
-    "server": "http://localhost:8000/server/server.php"
+    "server": "http://localhost:8000/server/server.php",
+    "oldserver": "http://ionvop.epizy.com/site/other/si-prog/server/server.php"
 }
