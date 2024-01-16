@@ -10,15 +10,60 @@
                 position: absolute;
                 left: 0rem;
                 top: 7rem;
-                width: max-content;
                 background-color: #3e3c3f;
                 border: 0.1rem solid #9a9494;
+                display: grid;
+                grid-template-rows: max-content;
+                width: 100%;
             }
             
             .popup__logout {
                 padding: 1rem;
                 font-size: 2rem;
                 border-bottom: 0.1rem solid #9a9494;
+            }
+
+            .popup__subscription {
+                border-bottom: 0.1rem solid #9a9494;
+                padding: 1rem;
+                font-size: 2rem;
+            }
+
+            .popup__title--detail {
+                display: grid;
+                grid-template-columns: max-content 1fr max-content;
+            }
+
+            .popup__title__text {
+                font-size: 3rem;
+                font-weight: bolder;
+                padding: 1rem;
+            }
+
+            .popup__title__detail {
+                font-size: 1.5rem;
+                padding: 1rem;
+            }
+
+            .popup__price {
+                padding: 1rem;
+                font-weight: bolder;
+                padding-left: 10rem;
+            }
+
+            .popup__benefits {
+                padding: 1rem;
+                padding-left: 10rem;
+            }
+
+            .popup__purchase {
+                display: grid;
+                grid-template-columns: 1fr max-content;
+            }
+
+            .popup__purchase__text {
+                padding: 1rem;
+                text-decoration: underline;
             }
 
             .home {
@@ -173,6 +218,76 @@
             <div class="popup" style="display: none;">
                 <div class="popup__logout" onclick="btnLogoutClick()">
                     Logout
+                </div>
+                <div class="popup__subscription">
+                    <div class="popup__title--detail">
+                        <div class="popup__title__text">
+                            BASIC
+                        </div>
+                        <div></div>
+                        <div class="popup__title__detail">
+                            Free trial for 7 days
+                        </div>
+                    </div>
+                    <div class="popup__price">
+                        100 PHP / 2 weeks
+                    </div>
+                    <div class="popup__benefits">
+                        - Individual Account
+                    </div>
+                    <div class="popup__purchase">
+                        <div></div>
+                        <div class="popup__purchase__text">
+                            <a href="https://paypal.me/ionvop">
+                                Purchase >>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup__subscription">
+                    <div class="popup__title">
+                        <div class="popup__title__text">
+                            STANDARD
+                        </div>
+                    </div>
+                    <div class="popup__price">
+                        299 PHP / 1 month
+                    </div>
+                    <div class="popup__benefits">
+                        - Dual User Account<br>
+                        - AI Guidance<br>
+                    </div>
+                    <div class="popup__purchase">
+                        <div></div>
+                        <div class="popup__purchase__text">
+                            <a href="https://paypal.me/ionvop">
+                                Purchase >>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup__subscription">
+                    <div class="popup__title">
+                        <div class="popup__title__text">
+                            PREMIUM
+                        </div>
+                    </div>
+                    <div class="popup__price">
+                        599 PHP / 1 month
+                    </div>
+                    <div class="popup__benefits">
+                        - Dual User Account<br>
+                        - AI Guidance<br>
+                        - Assessment and Activity<br>
+                    </div>
+                    <div class="popup__purchase">
+                        <div></div>
+                        <div class="popup__purchase__text">
+                            <a href="https://paypal.me/ionvop">
+                                Purchase >>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="-menu">
